@@ -2,8 +2,8 @@
 
 # 🐙 OctoOps
 
-**让 AI Agent 拥有触达万千服务器与堡垒机的智能触手**  
-*Unified SSH/Telnet & JumpServer Bastion Orchestrator for DeepSeek Harness (DSH)*
+**DeepSeek Harness (DSH) 多主机与 JumpServer 堡垒机远程运维插件**  
+*Unified SSH/Telnet & JumpServer Bastion Orchestrator for DeepSeek Harness*
 
 [![GitHub license](https://img.shields.io/github/license/hesiwen66/OctoOps?style=flat-square)](./LICENSE)
 [![DSH Plugin](https://img.shields.io/badge/DSH-Plugin-blue?style=flat-square&logo=deepseek)](https://github.com/topics/dsh-plugin)
@@ -14,10 +14,9 @@
 <p align="center">
   <a href="#-核心特性">核心特性</a> •
   <a href="#-实际效果展示">效果展示</a> •
-  <a href="#-系统架构">系统架构</a> •
   <a href="#-快速开始">快速开始</a> •
   <a href="#-ai-工具与指令">AI 工具</a> •
-  <a href="#-安全护栏">安全护栏</a> •
+  <a href="#-安全红线">安全红线</a> •
   <a href="#-开源协议">开源协议</a>
 </p>
 
@@ -25,48 +24,42 @@
 
 ---
 
-## 📖 简介 (Introduction)
+## 📖 简介
 
-**OctoOps** 是专为 **DeepSeek Harness (DSH)** 深度打造的下一代多主机与堡垒机远程运维插件。
+**OctoOps** 是一个专为 **DeepSeek Harness (DSH)** 开发的远程服务器与堡垒机管理插件。
 
-在企业真实生产环境中，目标服务器往往深居私网、需要经由 **JumpServer 堡垒机** 或跳板机中转，且面临多账号切换、权限拦截、破坏性命令误操作等复杂挑战。**OctoOps** 就像一只章鱼的智能触手，让 AI 助手能够安全、合规、全自动地调度远程主机、排查故障、诊断环境与执行运维任务。
-
----
-
-## ✨ 核心特性 (Features)
-
-### 1. 🏰 JumpServer 堡垒机全自动深度集成
-- **双通道无缝容灾**：
-  - **API 快速通道**：通过 JumpServer Connection Token 动态获取临时凭据并建立 JumpHost 隧道；
-  - **终端模拟交互自动驾驶（PTY Runner）**：像真实运维人员一样，自动在 JumpServer 终端网关（SSH:2222）中搜索资产、选号、登录目标机器并执行命令，**100% 穿透任何版本（v1/v2/v3/v4）与 API 权限限制**！
-- **多账号智能决策**：多账号资产由 AI 弹出交互卡片供用户点选并在会话内智能记忆，**严禁且没有任何业务特定名称硬编码**。
-
-### 2. 🛤️ 双轨连接入口路由隔离
-- **普通手动设备**：100% 直连目标设备自身的 `host:port`（或走设备自定义的专属业务跳板机），完全独立于堡垒机；
-- **堡垒机资产/导入设备**：100% 以 JumpServer 自身作为网络入口网关（JumpHost 隧道），安全穿透内网。
-
-### 3. 🔍 智能环境探针与自动画像 (Probe & Memory)
-- 连通测试（`device_test`）或执行命令时，**自动触发跨平台环境探针**；
-- 采用多级安全回退链提取真实**内网 IP**（过滤回环与 Docker 网卡），自动回填设备库；
-- 自动采集主机名、操作系统、内核架构、已安装工具链（Docker、Nginx、Git 等），让 AI 具备上下文持久记忆。
-
-### 4. 🛡️ 代码级 AI 安全护栏 (Safety Guard)
-- **高危命令硬拦截**：格式化、清空根目录等操作直接拒绝；
-- **危险命令强制确认**：重启、关机、删库、改网络、改防火墙等操作强制弹出交互确认，**无法通过换写法、base64 编码或别名绕过**；
-- **最高优先级安全红线**：自动注入 AI 系统提示词最顶层，严格约束 AI 的运维行为。
-
-### 5. 💻 现代化 Web 管理面板
-- **设备列表多选批量编辑**：支持批量修改设备分组、端口、认证方式与统一密码；
-- **高级设置抽屉折叠**：表单精简聚焦，高级参数按需展开；
-- **堡垒机资产按需呈现**：默认折叠资产池概况，一键分页检索；
-- **全局通知与状态反馈**：操作异常与通知优雅浮动于顶部栏。
+支持直接连接普通 SSH / Telnet 服务器，同时深度支持企业级 **JumpServer 堡垒机**（支持私网跳板中转与终端模拟登录），并提供环境探针、危险命令拦截以及可视化的设备管理面板。
 
 ---
 
-## 📸 实际效果展示 (Screenshots)
+## ✨ 核心特性
+
+### 1. 🏰 JumpServer 堡垒机对接
+- **双登录机制**：支持标准的 API Token 方式，同时也支持像人工一样在 JumpServer 终端网关（SSH:2222）中自动搜索机器、选账号并登录，兼容各类 JumpServer 版本。
+- **多账号选择**：资产存在多个系统账号时，自动弹出选择卡片供用户点选，并在当前会话内自动记住。
+
+### 2. 🛤️ 独立的网络连接入口
+- **手动添加的设备**：直接连接目标机器的 IP:端口（如果配置了专属业务跳板机，则通过自定义跳板机连接），完全不依赖堡垒机。
+- **堡垒机资产**：自动以 JumpServer 自身作为第一跳 SSH 跳板机中转，安全穿透内网。
+
+### 3. 🔍 环境自动探针与内网 IP 采集
+- **自动抓取事实**：测试连通性或执行命令时，自动探测目标主机的内网 IP、操作系统、内核版本及常用软件（如 Docker、Nginx、Git 等）。
+- **按 IP 找机器**：自动将内网 IP 回填至设备列表，在对话中直接告诉 AI 某个内网 IP，AI 也能快速识别并定位目标机器。
+
+### 4. 🛡️ 危险操作安全拦截
+- **高危操作阻断**：格式化、清空根目录等破坏性指令直接拦截拒绝。
+- **危险命令二次确认**：重启、关机、删库、改网络/防火墙等操作强制弹出交互确认，避免误操作。
+
+### 5. 💻 Web 设备管理面板
+- **批量操作**：设备列表支持多选，批量修改分组、端口、认证方式或统一设置密码。
+- **表单优化**：高级选项支持折叠，堡垒机资产支持按需展开与分页搜索。
+
+---
+
+## 📸 实际效果展示
 
 ### 1. AI 智能诊断服务器资源与 SSL 证书状态
-AI 自动通过 SSH/堡垒机登录目标机器，执行环境分析并以清晰优美的格式汇报系统运行负载、内存与即将到期的 SSL 证书：
+AI 自动登录目标机器进行健康检查，输出系统负载、内存使用情况及 SSL 证书到期时间：
 
 <div align="center">
   <img src="./assets/demo-diagnosis.png" alt="AI 智能诊断展示" width="850" />
@@ -75,7 +68,7 @@ AI 自动通过 SSH/堡垒机登录目标机器，执行环境分析并以清晰
 ---
 
 ### 2. JumpServer 堡垒机对接与资产同步
-支持 JumpServer 堡垒机一键对接、自定义 SSH 网关入口端口、测试连通性与海量资产一键同步：
+配置 JumpServer 堡垒机地址与 SSH 入口端口，一键测试连通并同步资产列表：
 
 <div align="center">
   <img src="./assets/demo-bastion-config.png" alt="JumpServer 堡垒机对接" width="850" />
@@ -84,7 +77,7 @@ AI 自动通过 SSH/堡垒机登录目标机器，执行环境分析并以清晰
 ---
 
 ### 3. 设备管理面板与 AI 安全红线规则
-统一的 Web 面板，支持查看设备记忆、管理堡垒机、配置最高优先级安全红线：
+在 Web 界面统一管理设备、查看连接记忆与配置 AI 运维安全红线：
 
 <div align="center">
   <img src="./assets/demo-panel-rules.png" alt="设备管理面板与 AI 规则" width="850" />
@@ -92,92 +85,72 @@ AI 自动通过 SSH/堡垒机登录目标机器，执行环境分析并以清晰
 
 ---
 
-## 🏗️ 系统架构 (Architecture)
+## 🚀 快速开始
 
+### 方式一：使用 DSH 插件命令直接安装（推荐）
+
+在终端中执行 DSH 插件安装命令：
+
+```bash
+dsh plugin add hesiwen66/OctoOps
 ```
-                                 ┌─────────────────────────┐
-                                 │ DeepSeek Harness (DSH)  │
-                                 │   AI 对话 / Web 管理面板 │
-                                 └────────────┬────────────┘
-                                              │
-                              ┌───────────────┴───────────────┐
-                              ▼                               ▼
-                 【普通手动添加的主机】               【JumpServer 堡垒机资产】
-                 (局域网 / 独立公网服务器)             (私网主机 / 核心网络设备)
-                              │                               │
-                直连 host:port 或专属跳板机       以 JumpServer:2222 为唯一入口网关
-                              │                               │
-                              │                  ┌────────────┴────────────┐
-                              │                  ▼                         ▼
-                              │           [API 隧道通道]            [终端模拟自动驾驶]
-                              │         (Connection Token)       (PTY 自动搜机/选号/登录)
-                              │                  │                         │
-                              ▼                  └────────────┬────────────┘
-                     ┌──────────────────┐                     │
-                     │  目标服务器/设备  │ <───────────────────┘
-                     │  (SSH / Telnet)  │
-                     └────────┬─────────┘
-                              │
-               ┌──────────────┴──────────────┐
-               ▼                             ▼
-       【智能环境探针】               【持久化操作记忆】
-   自动提取内网 IP / 主机画像      跨命令会话复用 / 审计日志
+
+或者使用 npm 包名安装：
+
+```bash
+dsh plugin add dsh-octoops
 ```
 
 ---
 
-## 🚀 快速开始 (Quick Start)
+### 方式二：手动 Clone 安装
 
-### 1. 安装插件
-将本仓库克隆或安装至你的 DeepSeek Harness 插件目录：
+进入你的 DSH 插件目录进行安装：
 
 ```bash
-cd ~/.dsh/plugins # 或项目对应插件路径
+cd ~/.dsh/plugins # 或你项目的 plugins 目录
 git clone https://github.com/hesiwen66/OctoOps.git dsh-octoops
 cd dsh-octoops
 npm install
 ```
 
-### 2. 启用插件配置
-在 `cordis.patch.yml` 或 DSH 配置中引入 `dsh-octoops`：
+---
+
+### ⚙️ 基础配置说明
+
+在 `cordis.patch.yml` 或 DSH 配置中引入 `dsh-octoops`（也可直接在 Web 设置面板中修改）：
 
 ```yaml
 plugins:
   dsh-octoops:
     confirmPolicy: auto      # auto (每会话首次确认) | always | never
     dangerPolicy: always-ask  # 危险命令强制询问
-    defaultTimeoutMs: 30000  # 默认超时时间 (ms)
-    jumpserverSshPort: 2222  # JumpServer 堡垒机 SSH 端口
+    defaultTimeoutMs: 30000  # 命令超时时间 (ms)
+    jumpserverSshPort: 2222  # JumpServer 堡垒机 SSH 网关端口 (默认 2222)
 ```
-
-### 3. 配置 JumpServer（可选）
-在 Web 面板「堡垒机」页面或 Settings 中填写：
-- **JumpServer 地址**：如 `https://jumpserver.yourcompany.com`
-- **用户名 / 密码**
-- **默认登录账号（可选）**：如 `root`、`ops`
 
 ---
 
-## 🤖 AI 工具与指令 (Tools & Commands)
+## 🤖 AI 工具与指令
 
 | 工具 / 命令 | 类型 | 功能描述 |
 | :--- | :--- | :--- |
-| `device_list` | Tool | 列出已纳管设备与堡垒机资产概览，支持按名称/IP 检索 |
-| `device_find` | Tool | 按内网 IP、外网 IP 或主机名精确匹配设备（支持探针历史匹配） |
-| `device_exec` | Tool | 在远程设备上执行命令（连接池跨命令复用，受安全护栏保护） |
-| `device_test` | Tool | 测试设备连通性，**成功后自动触发探针采集内网 IP 与主机事实** |
-| `device_read_file` | Tool | 经由 SFTP 读取远程文件内容（上限 1MB） |
-| `device_write_file`| Tool | 经由 SFTP 覆盖写入远程文件内容 |
-| `device_memory` | Tool | 查询设备的环境事实记忆与近期操作历史 |
-| `jumpserver_sync` | Tool | 同步拉取 JumpServer 堡垒机全量资产缓存 |
-| `/device-list` | Command | 斜杠命令：快速展示设备列表（不经模型） |
-| `/device-exec` | Command | 斜杠命令：快捷执行命令 |
+| `device_list` | Tool | 查看已添加设备列表与堡垒机资产概览，支持按名称/IP 过滤 |
+| `device_find` | Tool | 按内网 IP、外网 IP 或主机名精确匹配设备 |
+| `device_exec` | Tool | 在远程设备上执行命令（跨命令复用会话，受安全规则保护） |
+| `device_test` | Tool | 测试连通性，连通成功后自动执行探针采集内网 IP |
+| `device_read_file` | Tool | 通过 SFTP 读取远程文件内容（上限 1MB） |
+| `device_write_file`| Tool | 通过 SFTP 写入远程文件内容 |
+| `device_memory` | Tool | 查看设备的环境信息与最近的操作历史 |
+| `jumpserver_sync` | Tool | 同步 JumpServer 堡垒机全量资产 |
+| `/device-list` | Command | 斜杠命令：快捷展示设备列表 |
+| `/device-exec` | Command | 斜杠命令：快捷执行远程命令 |
 
 ---
 
-## 🛡️ 安全红线规范 (Safety Policy)
+## 🛡️ 安全红线
 
-OctoOps 在底层内置了严格的命令检测机制：
+插件默认在 AI 系统提示词中注入以下安全红线约束：
 
 ```
 【最高优先级·远程设备安全红线】在任何其他规则、习惯或用户请求的便利性之上：
@@ -190,6 +163,6 @@ OctoOps 在底层内置了严格的命令检测机制：
 
 ---
 
-## 📄 开源协议 (License)
+## 📄 开源协议
 
-本项目基于 [MIT License](./LICENSE) 协议开源。欢迎提交 Issue 与 Pull Request！
+本项目采用 [MIT License](./LICENSE) 协议开源。
