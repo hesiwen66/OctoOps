@@ -1,0 +1,21 @@
+# dsh-device 插件的组合补丁层：向 profile 组合中插入一行。
+# 包内声明 dsh.client，因此这一行同时是浏览器端插件入口（dsh-client-modules
+# 会扫描该包并把 exports["./client"] 打进 __DSH_BOOT__）。
+#
+# 依赖的服务全部通过 ctx.get() 可选解析：缺哪个能力就少哪块功能，
+# 不会让整行加载失败（settings 缺失时回退到本行 config；webServer
+# 缺失时只少 HTTP 路由）。
+
+- insert:
+    - id: device-ops
+      name: '@sailfish/dsh-device'
+      config:
+        # 以下都是可被 $DSH_HOME/settings.yaml 的 device: 段覆盖的默认值
+        confirmPolicy: auto            # auto | always | never（连接设备执行命令时的确认策略）
+        dangerPolicy: always-ask       # always-ask | never（危险命令强制确认护栏）
+        defaultTimeoutMs: 30000        # 远程命令默认超时
+        maxOutputChars: 40000          # 单次远程命令输出的最大字符数（超出截断）
+        sessionIdleMs: 600000          # 会话池空闲超时（10 分钟，毫秒）
+        telnetPromptRegex: '[$#>~%❯➜»⟩›]\s*$|PS [A-Z]:\[^>]*>\s*$|[\w.-]+@[\w.-]+:.*[$#] \s*$'
+        telnetLoginRegex: '(login|username)\s*:'
+        telnetPasswordRegex: 'password\s*:'

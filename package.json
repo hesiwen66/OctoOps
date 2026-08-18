@@ -1,0 +1,66 @@
+{
+  "name": "dsh-octoops",
+  "version": "0.1.0",
+  "description": "OctoOps: Unified SSH/Telnet & JumpServer Bastion Orchestrator for DeepSeek Harness (DSH)",
+  "type": "module",
+  "main": "lib/index.js",
+  "exports": {
+    ".": "./lib/index.js",
+    "./client": "./lib/client.js",
+    "./package.json": "./package.json"
+  },
+  "files": [
+    "lib/",
+    "skills/",
+    "cordis.patch.yml",
+    "assets/"
+  ],
+  "keywords": [
+    "dsh",
+    "dsh-plugin",
+    "deepseek-harness",
+    "jumpserver",
+    "bastion",
+    "ssh",
+    "telnet",
+    "devops",
+    "ai-ops",
+    "remote-management"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/hesiwen66/OctoOps.git"
+  },
+  "bugs": {
+    "url": "https://github.com/hesiwen66/OctoOps/issues"
+  },
+  "homepage": "https://github.com/hesiwen66/OctoOps#readme",
+  "dsh": {
+    "bundle": {
+      "patch": "./cordis.patch.yml"
+    },
+    "client": {
+      "platform": "web"
+    }
+  },
+  "license": "MIT",
+  "dependencies": {
+    "@deepseek-ai/dsh-credentials": "0.1.0-rc.6",
+    "@deepseek-ai/dsh-settings": "0.1.0-rc.6",
+    "@deepseek-ai/dsh-tools": "0.1.0-rc.6",
+    "@deepseek-ai/schemastery": "^3.18.1",
+    "iconv-lite": "^0.6.3",
+    "ssh2": "^1.16.0"
+  },
+  "engines": {
+    "node": ">=18.17"
+  },
+  "scripts": {
+    "smoke": "node scripts/smoke-client.mjs && node scripts/smoke-jumpserver-accounts.mjs && node scripts/smoke-imported-jumpserver-exec.mjs && node scripts/smoke-entry-routing.mjs",
+    "smoke:web": "node scripts/smoke-web.mjs"
+  },
+  "devDependencies": {
+    "@deepseek-ai/cordis": "4.0.1",
+    "playwright-core": "^1.53.0"
+  }
+}
