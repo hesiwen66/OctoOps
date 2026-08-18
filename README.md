@@ -10,7 +10,7 @@ DeepSeek Harness 的服务器运维与 JumpServer 堡垒机插件。
 
 ## 特性
 
-- **命令执行与状态巡检**：通过 SSH / Telnet 执行远程命令，支持 CPU、内存、磁盘负载及 SSL 证书状态检查。
+- **远程命令执行与分析**：通过 SSH / Telnet 在目标主机上执行任意 Shell 命令与脚本，并由 AI 结构化解析输出结果。
 - **远程文件读写**：内置 SFTP 支持，可直接读取和编辑远程配置文件与日志。
 - **连接会话复用**：维护底层 SSH 连接池，同设备连续操作无需重复建立连接。
 - **JumpServer 对接**：支持 API 认证与终端交互登录，自动通过堡垒机 SSH 网关代理访问内网资产；多账号资产支持弹窗选择。
@@ -22,13 +22,13 @@ DeepSeek Harness 的服务器运维与 JumpServer 堡垒机插件。
 
 ## 演示
 
-### 状态巡检与证书检查
+### 示例 1：系统状态与 SSL 证书巡检
 ![状态巡检](assets/demo-diagnosis.png)
 
-### JumpServer 堡垒机对接
+### 示例 2：JumpServer 堡垒机对接与资产同步
 ![堡垒机对接](assets/demo-bastion-config.png)
 
-### 设备管理面板与安全规则
+### 示例 3：设备管理面板与安全红线规则
 ![管理面板](assets/demo-panel-rules.png)
 
 ---
