@@ -33,19 +33,20 @@ DeepSeek Harness (DSH) 的远程服务器管理插件。支持直连 SSH / Telne
 
 ## 安装
 
-使用 DSH 插件命令安装：
+### 方式 1：通过 Git / npm 安装至 DSH
+
+在 DSH 项目根目录下执行：
 
 ```bash
-dsh plugin add hesiwen66/OctoOps
+npm install git+https://github.com/hesiwen66/OctoOps.git
 ```
 
-或者手动克隆到插件目录：
+### 方式 2：本地克隆到插件目录
 
 ```bash
-cd ~/.dsh/plugins
+cd plugins
 git clone https://github.com/hesiwen66/OctoOps.git dsh-octoops
-cd dsh-octoops
-npm install
+cd dsh-octoops && npm install
 ```
 
 ---
