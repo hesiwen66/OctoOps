@@ -74,7 +74,16 @@ AI 自动通过 SSH/堡垒机登录目标机器，执行环境分析并以清晰
 
 ---
 
-### 2. 设备管理面板与 AI 安全红线规则
+### 2. JumpServer 堡垒机对接与资产同步
+支持 JumpServer 堡垒机一键对接、自定义 SSH 网关入口端口、测试连通性与海量资产一键同步：
+
+<div align="center">
+  <img src="./assets/demo-bastion-config.png" alt="JumpServer 堡垒机对接" width="850" />
+</div>
+
+---
+
+### 3. 设备管理面板与 AI 安全红线规则
 统一的 Web 面板，支持查看设备记忆、管理堡垒机、配置最高优先级安全红线：
 
 <div align="center">
